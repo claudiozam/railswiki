@@ -1,6 +1,5 @@
 class CategoriesController < ApplicationController
-  before_action :set_category, only: [:show, :edit, :update, :destroy]
-
+  
   # GET /categories
   def index
     @categories = Category.all
@@ -8,6 +7,7 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1
   def show
+    @category = Category.find(params[:id])
   end
 
   # GET /categories/new
@@ -17,6 +17,7 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1/edit
   def edit
+    @category = Category.find(params[:id])
   end
 
   # POST /categories
@@ -31,12 +32,11 @@ class CategoriesController < ApplicationController
 
   # PATCH/PUT /categories/1
   def update
-    respond_to do |format|
-      if @category.update(category_params)
-        redirect_to @category, notice: 'Category was successfully updated.'
-      else
-        render :edit
-      end
+    @category = Category.find(params[:id])
+    if @category.update(category_params)
+      redirect_to @category, notice: 'Category was successfully updated.'
+    else
+      render :edit
     end
   end
 
